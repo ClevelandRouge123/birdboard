@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,18 @@ class ProjectsController extends Controller
 
     public function store()
     {
-        Project::create(request(['title', 'description']));
-       return redirect('/projects');
+        $attributes = request()->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        Project::create($attributes);
+
+        return redirect('/projects');
+    }
+
+    public function show(Project $project)
+    {
+        return view('projects.show', compact('project'));
     }
 }
