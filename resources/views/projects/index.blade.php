@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div style="display: flex; align-items: center">
-    <h1 class="card-header" style="margin-right: auto">Projects:</h1>
+    <div class="flex items-center mb-3">
+    <h1 class="mr-auto text-2xl" >Projects:</h1>
     <a href="/projects/create">New Project</a>
     </div>
         <ul>
         @forelse($projects as $project)
-            <li class="list-decimal">
+            <li class="lg:list-disc">
                 <a href="{{$project->path()}}">{{$project->title}}</a>
             </li>
 

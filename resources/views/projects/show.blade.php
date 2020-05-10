@@ -3,10 +3,10 @@
 @section('content')
 
 
-    <h1>{{$project->title}}</h1>
+    <h1 class="text-3xl">{{$project->title}}</h1>
 
     <ul>
-        <li>
+        <li class="lg:border-separate">
 
             {{$project->description}}
         </li>
