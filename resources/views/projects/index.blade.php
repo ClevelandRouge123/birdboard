@@ -24,5 +24,5 @@
             <div> No Projects Yet.</div>
         @endforelse
     </main>
-x
+
 @endsection

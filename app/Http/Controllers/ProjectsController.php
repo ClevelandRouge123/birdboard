@@ -23,11 +23,11 @@ class ProjectsController extends Controller
 
 //$attributes['owner_id'] = auth()->id();
 
-        auth()->user()->projects()->create($attributes);
+        $project = auth()->user()->projects()->create($attributes);
 
 //        Project::create($attributes);
 
-        return redirect('/projects');
+        return redirect($project->path());
     }
 
     public function show(Project $project)
@@ -47,4 +47,6 @@ class ProjectsController extends Controller
     {
         return view('projects.create');
     }
+
+
 }

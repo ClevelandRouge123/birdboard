@@ -18,34 +18,43 @@
             {{--Column one--}}
             <div class="lg:w-2/3 px-3">
                 <h2 class="text-grey text-xl font-normal">Tasks</h2>
-                <div class="mb-3">
-                    <div class="bg-white p-5 rounded-lg shadow mb-2" style="min-height: 50px">
-                        <div class="text-gray-500">Task</div>
+                @foreach($project->tasks as $task)
+                    <div class="mb-3">
+                        <form method="POST" action="{{$task->path()}}">
+                            @method('PATCH')
+                            @csrf
+                            <div class="bg-white p-5 rounded-lg shadow mb-2 flex" style="min-height: 50px">
+                                <input name="body" value="{{$task->body}}" class="w-full {{$task->completed ? 'line-through' : '' }}">
+                                <input name="completed" type="checkbox"
+                                       onchange="this.form.submit()" {{$task->completed ? 'checked' : ''}}>
+                            </div>
+                        </form>
                     </div>
-                </div>
+                    {{--                @empty--}}
+                    {{--                    <div class="mb-3">--}}
+                    {{--                        <div class="bg-white p-5 rounded-lg shadow mb-2" style="min-height: 50px">--}}
+                    {{--                            <div class="text-gray-500">No Tasks Found</div>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
+                @endforeach
                 <div class="mb-3">
-                    <div class="bg-white p-5 rounded-lg shadow mb-2" style="min-height: 50px">
-                        <div class="text-gray-500">Task</div>
-                    </div>
+                    <form action="{{$project->path() . '/tasks'}}" method="post">
+                        @csrf
+                        <div class="bg-white p-5 rounded-lg shadow mb-2 border-2 border-green-300 "
+                             style="min-height: 50px">
+                            <input placeholder="Enter New Task Here..." class="w-full" name="body">
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <div class="bg-white p-5 rounded-lg shadow mb-2" style="min-height: 50px">
-                        <div class="text-gray-500">Task</div>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div class="bg-white p-5 rounded-lg shadow mb-2" style="min-height: 50px">
-                        <div class="text-gray-500">Task</div>
-                    </div>
-                </div>
+
+
                 <div>
                     <h2 class="text-grey text-xl font-normal">Notes</h2>
 
                     <div class="bg-white p-5 rounded-lg shadow mb-2" style="height: 200px">
-                        {{--                            <h3 class="font-normal text-xl mb-4 py-2 -ml-5  border-l-4 pl-4"--}}
-                        {{--                                style="border-left: 4px solid #4299e1">Notes--}}
-                        {{--                            </h3>--}}
-                        <textarea style="min-height: 150px" class="text-gray-500 w-full h-full">{{ Str::limit($project->description, 100)}}</textarea>
+
+                        <textarea style="min-height: 150px"
+                                  class="text-gray-500 w-full h-full">{{ Str::limit($project->description, 100)}}</textarea>
                     </div>
                 </div>
                 <div></div>

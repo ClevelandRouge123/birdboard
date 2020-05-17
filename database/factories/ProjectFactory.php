@@ -9,10 +9,8 @@ use Illuminate\Database\Eloquent\Factory;
 /** @var Project $factory */
 $factory->define(Project::class, function (Faker $faker) {
     return [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'owner_id' => function () {
-        return factory(App\User::class)->create()->id;
-        }
+        'title' => $faker->sentence(4),
+        'description' => $faker->sentence(4),
+        'owner_id' => factory(App\User::class)
     ];
 });
