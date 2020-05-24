@@ -51,13 +51,18 @@ class ProjectsController extends Controller
     public function update(Project $project)
     {
         $this->authorize('update', $project);
-//        if (auth()->user()->isNot($project->owner)) {
-//            abort(404);
-//        }
 
         $project->update(request(['notes']));
 
         return redirect($project->path());
+    }
+
+    public function delete(Project $project)
+    {
+        $project->delete();
+
+        return redirect('/projects');
+
     }
 
 
