@@ -5,9 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="text-xl">{{ __('Register') }}</div>
 
-                <div class="card-body">
+                <div class="bg-white p-12 rounded-lg shadow mb-2">
+                    <div class="text-xl text-center">{{ __('Register') }}</div>
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

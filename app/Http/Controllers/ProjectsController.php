@@ -10,7 +10,7 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = auth()->user()->projects;
-//        $projects = Project::all();
+
         return view('projects.index', compact('projects'));
     }
 
@@ -18,7 +18,8 @@ class ProjectsController extends Controller
     {
         $attributes = request()->validate([
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'notes' => 'max:2400'
         ]);
 
 //$attributes['owner_id'] = auth()->id();
@@ -35,9 +36,8 @@ class ProjectsController extends Controller
 //        if (auth()->id() !== (int) $project->owner_id) {
 //            abort(404);
 //        }
-        if (auth()->user()->isNot($project->owner)) {
-            abort(404);
-        }
+        $this->authorize('update', $project);
+
 
 
         return view('projects.show', compact('project'));
@@ -46,6 +46,18 @@ class ProjectsController extends Controller
     public function create()
     {
         return view('projects.create');
+    }
+
+    public function update(Project $project)
+    {
+        $this->authorize('update', $project);
+//        if (auth()->user()->isNot($project->owner)) {
+//            abort(404);
+//        }
+
+        $project->update(request(['notes']));
+
+        return redirect($project->path());
     }
 
 
