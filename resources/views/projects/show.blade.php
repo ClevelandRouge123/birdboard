@@ -5,10 +5,8 @@
     <header class="flex items-center mb-3">
         <div class="flex justify-between w-full items-center">
             <p class="mr-auto text-gray text-base"><a href="/projects">My Projects</a> / {{$project->title}}</p>
-{{--            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"--}}
-{{--               href="/projects/create">Add Project</a>--}}
-{{--            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"--}}
-{{--               href="/projects/edit/{{$project->id}}">Edit Project</a>--}}
+            <a class="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
+               href="/projects/{{$project->id}}/edit">Edit Project</a>
             <form method="POST" action="/projects/{{$project->id}}">
                 @csrf
                 @method('DELETE')
