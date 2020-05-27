@@ -7,12 +7,17 @@ use App\Project;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class ProjectsController extends Controller
 {
+    /**
+     * @return Application|Factory|View
+     */
     public function index()
     {
         $projects = auth()->user()->projects;
@@ -20,23 +25,30 @@ class ProjectsController extends Controller
         return view('projects.index', compact('projects'));
     }
 
+    /**
+     * @return Application|RedirectResponse|Redirector
+     */
     public function store()
     {
 
         return redirect(auth()->user()->projects()->create($this->validaterequest())->path());
     }
 
+    /**
+     * @param Project $project
+     * @return Application|Factory|View
+     * @throws AuthorizationException
+     */
     public function show(Project $project)
     {
-//        if (auth()->id() !== (int) $project->owner_id) {
-//            abort(404);
-//        }
         $this->authorize('update', $project);
-
 
         return view('projects.show', compact('project'));
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function create()
     {
         return view('projects.create');

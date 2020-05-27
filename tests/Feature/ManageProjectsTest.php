@@ -11,6 +11,10 @@ use tests\Mockery\Adapter\Phpunit\EmptyTestCase;
 use tests\Mockery\Matcher\SubsetTest;
 use Tests\TestCase;
 
+/**
+ * Class ManageProjectsTest
+ * @package Tests\Feature
+ */
 class ManageProjectsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;

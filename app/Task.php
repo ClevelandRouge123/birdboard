@@ -9,13 +9,34 @@ class Task extends Model
 {
     protected $guarded = [];
     protected $touches = ['project'];
+protected $casts = [
+    'completed' => 'boolean'
+];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($task) {
+            $task->project->recordActivity('created_task');
+        });
+//        static::updated(function ($task) {
+//            if (!$task->completed) return;
+//            $task->project->recordActivity('completed_task');
+//        });
+    }
+
+    public function complete()
+    {
+        $this->update(['completed' => true]);
+        $this->project->recordActivity('completed_task');
+    }
 
     /**
      * @return BelongsTo
      */
     public function project()
     {
-       return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class);
     }
 
     /**
