@@ -18,12 +18,19 @@ class Project extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function addTask($body)
     {
         return $this->tasks()->create(compact('body'));
     }
+
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class ProjectsController extends Controller
 {
@@ -36,6 +42,11 @@ class ProjectsController extends Controller
         return view('projects.create');
     }
 
+    /**
+     * @param Project $project
+     * @return Application|RedirectResponse|Redirector
+     * @throws AuthorizationException
+     */
     public function update(Project $project)
     {
         $this->authorize('update', $project);
@@ -47,6 +58,11 @@ class ProjectsController extends Controller
         return redirect($project->path());
     }
 
+    /**
+     * @param Project $project
+     * @return Application|RedirectResponse|Redirector
+     * @throws Exception
+     */
     public function delete(Project $project)
     {
         $project->delete();
@@ -63,12 +79,12 @@ class ProjectsController extends Controller
     /**
      * @return array
      */
-    public function validaterequest(): array
+    protected function validaterequest(): array
     {
        return request()->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'notes' => 'min:3'
+            'title' => 'sometimes|required',
+            'description' => 'sometimes|required',
+            'notes' => 'nullable'
         ]);
     }
 
