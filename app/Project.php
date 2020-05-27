@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use phpDocumentor\Reflection\DocBlock\Description;
 
 /**
  * Class Project
@@ -53,13 +54,10 @@ class Project extends Model
     }
 
     /**
-     * @param $type
+     * @param $description
      */
-    public function recordActivity($type)
+    public function recordActivity($description)
     {
-        Activity::create([
-            'project_id' => $this->id,
-            'description' => $type
-        ]);
+        $this->activity()->create(compact('description'));
     }
 }
