@@ -5,6 +5,8 @@
     <header class="flex items-center mb-3">
         <div class="flex justify-between w-full items-center">
             <p class="mr-auto text-gray text-base"><a href="/projects">My Projects</a> / {{$project->title}}</p>
+            <a class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+               href="/projects">Back</a>
             <a class="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
                href="/projects/{{$project->id}}/edit">Edit Project</a>
             <form method="POST" action="/projects/{{$project->id}}">
@@ -85,11 +87,17 @@
                         <div class="text-gray-500">{{ Str::limit($project->description, 100)}}</div>
                     </div>
                 </div>
-
+                <div>
+                    <div class="bg-white p-5 rounded-lg shadow mb-2" style="height: auto">
+                        <h3 class="font-normal text-xl mb-4 py-2 -ml-5  border-l-4 pl-4"
+                            style="border-left: 4px solid #4299e1">Project Activity
+                        </h3>
+                        @include ('projects.activity.card')
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <a class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-       href="/projects">Back</a>
+
 @endsection

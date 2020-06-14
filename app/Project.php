@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use phpDocumentor\Reflection\DocBlock\Description;
 
 /**
@@ -41,7 +42,7 @@ class Project extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function tasks()
     {
@@ -50,7 +51,7 @@ class Project extends Model
 
     public function activity()
     {
-        return $this->hasMany(Activity::class);
+        return $this->morphMany(Activity::class, 'subject')->latest();
     }
 
     /**
@@ -58,6 +59,9 @@ class Project extends Model
      */
     public function recordActivity($description)
     {
-        $this->activity()->create(compact('description'));
+        $this->activity()->create([
+            'project_id' => $this->project_id,
+            'description' => $description
+        ]);
     }
 }

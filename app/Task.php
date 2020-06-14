@@ -12,25 +12,10 @@ class Task extends Model
     protected $casts = [
         'completed' => 'boolean'
     ];
+
     /**
      * @var mixed
      */
-// Below left for reference if ever wanted to do locally
-//    protected static function boot()
-//    {
-//        parent::boot();
-//
-////        static::created(function ($task) {
-////            $task->project->recordActivity('created_task');
-////        });
-////        static::deleted(function ($task) {
-////            $task->project->recordActivity('deleted_task');
-////        });
-////        static::updated(function ($task) {
-////            if (!$task->completed) return;
-////            $task->project->recordActivity('completed_task');
-////        });
-//    }
 
     public function complete()
     {
@@ -58,5 +43,28 @@ class Task extends Model
     public function path()
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
+    }
+
+    /**
+     * Record activity for a project.
+     *
+     * @param string $description
+     */
+    public function recordActivity($description)
+    {
+        $this->activity()->create([
+            'project_id' => $this->project_id,
+            'description' => $description
+        ]);
+    }
+
+    /**
+     * The activity feed for the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function activity()
+    {
+        return $this->morphMany(Activity::class, 'subject')->latest();
     }
 }
