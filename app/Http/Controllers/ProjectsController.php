@@ -88,6 +88,7 @@ class ProjectsController extends Controller
        return view('projects.edit', compact('project'));
     }
 
+
     /**
      * @return array
      */
@@ -99,5 +100,6 @@ class ProjectsController extends Controller
             'notes' => 'nullable'
         ]);
     }
+
 
 }
